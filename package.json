@@ -1,0 +1,27 @@
+{
+  "name": "mod10chalteamprofilegen",
+  "version": "1.0.0",
+  "description": "Team Profile Generator",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SabotMBT/Mod10ChalTeamProfileGen.git"
+  },
+  "author": "SabotMBT",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/SabotMBT/Mod10ChalTeamProfileGen/issues"
+  },
+  "homepage": "https://github.com/SabotMBT/Mod10ChalTeamProfileGen#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "jest": "^28.1.0"
+  }
+}
