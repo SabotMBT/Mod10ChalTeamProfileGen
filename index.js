@@ -5,6 +5,8 @@ const Employee = require("./lib/Employee");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
+const dataWrite = require("./src/data");
+const DelPath = "./dist/index.html";
 
 const EngArray = [];
 const IntArray = [];
@@ -151,11 +153,83 @@ function checkIf(x) {
   if (x.bin === true) {
     newEmployee();
   } else {
-    console.log(ManArray);
-    console.log(EngArray);
-    console.log(IntArray);
-    return;
+    pageMaker()
+      .then(AppendManCard())
+      .then(AppendEngCard())
+      .then(AppendIntCard())
+      .then(FinishIt());
   }
+}
+async function pageMaker() {
+  try {
+    fs.unlinkSync(DelPath);
+  } catch (err) {
+    console.error(err);
+  }
+  // function to push HTML template to new file index.html
+  let bplate = dataWrite.boilerplateGen();
+  fs.writeFileSync(__dirname + "/dist/index.html", bplate, (err) => {
+    if (err) console.log(err);
+    else {
+      console.log("Boilerplate Success!");
+    }
+  });
+}
+async function AppendManCard() {
+  // function to launch for loops for the three arrays of objects, dynamically creating and appending html elements.
+  let MGen = dataWrite.ManCardGen(ManArray);
+  console.log(ManArray.length);
+
+  if (ManArray.length === 0) {
+    console.log("No Data!");
+  } else {
+    console.log("Writing Managers!");
+    fs.appendFileSync(__dirname + "/dist/index.html", MGen, (err) => {
+      if (err) console.log(err);
+      else {
+        console.log("Manager Cards Success!");
+      }
+    });
+  }
+}
+async function AppendEngCard() {
+  let EGen = dataWrite.EngCardGen(EngArray);
+  console.log(EngArray.length);
+  if (EngArray.length === 0) {
+    console.log("No Data!");
+  } else {
+    console.log("Writing Engineers!");
+    fs.appendFileSync(__dirname + "/dist/index.html", EGen, (err) => {
+      if (err) console.log(err);
+      else {
+        console.log("Engineer Cards Success!");
+      }
+    });
+  }
+}
+async function AppendIntCard() {
+  let IGen = dataWrite.IntCardGen(IntArray);
+  console.log(IntArray.length);
+  if (IntArray.length === 0) {
+    console.log("No Data!");
+  } else {
+    console.log("Writing Interns!");
+    fs.appendFileSync(__dirname + "/dist/index.html", IGen, (err) => {
+      if (err) console.log(err);
+      else {
+        console.log("Intern Cards Success!");
+      }
+    });
+  }
+}
+async function FinishIt() {
+  let pageEnd = dataWrite.finalGen();
+  fs.appendFileSync(__dirname + "/dist/index.html", pageEnd, (err) => {
+    if (err) console.log(err);
+    else {
+      console.log("Finalization Complete!");
+    }
+  });
 }
 
 newEmployee();
